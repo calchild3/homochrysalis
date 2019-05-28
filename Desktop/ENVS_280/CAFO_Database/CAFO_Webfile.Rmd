@@ -1,0 +1,79 @@
+---
+title: "CAFO Proposal"
+author: "Chris Lang"
+date: "April 28, 2019"
+output: html_document
+---
+
+###Environmental Injustice and Industrial Animal Agriculture: Geospatial Examination of CAFOs Across County, Income, and Race
+
+###Background
+
+Numerous studies have suggested that Concentrated Animal Feeding Operations are disproportionately located in low income, and/or minority communities. I am interested in looking at data for top 5 states that produce "livestock units" across three animal species (cattle, hogs, chickens) that dominate domestic industrial animal agriculture. 
+
+I am sourcing data from [Data for a Cause, 2017](https://data.world/dataforacause/concentrated-animal-feeding-operations-cafo "Concentrated Animal Feeding Operations (CAFO), US, Data.world"), as well as from 
+[United States Department of Agriculture, 2017](https://quickstats.nass.usda.gov/#8BFBF75E-B877-3245-AFCC-B00D4B1BE1BF "Quickstats, Cattle Inventory Across State, USDA"). 
+
+![](images/HogLagoon-Steve.jpg)
+
+Source: Cornucopia
+
+My intention is to first sort the values of inventory of each "commodity" (cattle, hogs, chickens) in descending order to determine which top 5 states produce the most of each type of animal. From here, I hope to survey the counties within each of these 5 states that yield the highest inventory. From here, I will tie in data from the [US Census Bureau, 2017](https://factfinder.census.gov/faces/nav/jsf/pages/searchresults.xhtml?refresh=t#none "United States Census Bureau") to look at race and class demographics of these counties.
+
+```{r}
+library(tidyverse)
+cattle_cafo.dat <- read_csv('data/cattle_inventory_state.csv')
+cattle_cafo.dat1 <- select(cattle_cafo.dat, Program, Year, Value, State, Commodity)
+
+read_csv('data/cattle_inventory_state.csv') %>%
+  select(Program, Year, Value, State, Commodity) %>%
+  mutate(Value = as.numeric(gsub(',', '', Value))) %>%
+  arrange(desc(Value)) %>%
+  head(cattle_cafo.dat1, 10)
+``` 
+
+From these results, we can see that Texas, Missouri, Oklahoma, South Dakota, and Nebraska have the highest inventory for cattle in animal agriculture. 
+
+```{r}
+library(tidyverse)
+hogs_cafo.dat <- read_csv('data/hogs_inventory_state.csv') 
+hogs_cafo.dat1 <- select(hogs_cafo.dat, Program, Year, Value, State, Commodity)
+
+read_csv('data/hogs_inventory_state.csv') %>%
+  select(Program, Year, Value, State, Commodity) %>%
+  mutate(Value = as.numeric(gsub(',', '', Value))) %>%
+  arrange(desc(Value))
+```
+
+From these results, we can see that Iowa, North Carolina, Minnesota, Indiana, and Illinois have the highest inventory for hogs in animal agriculture. 
+
+```{r}
+library(tidyverse)
+chickens_cafo.dat <- read_csv('data/chickens_inventory_state.csv') 
+view(chickens_cafo.dat)
+chickens_cafo.dat1 <- select(chickens_cafo.dat, Program, Year, Value, State, Commodity)
+tbl_df(chickens_cafo.dat1)
+
+
+read_csv('data/chickens_inventory_state.csv') %>%
+  select(Program, Year, Value, State, Commodity) %>%
+  mutate(Value = as.numeric(gsub(',', '', Value))) %>%
+  arrange(desc(Value)) %>%
+  head == 10
+
+ggplot(chickens_cafo.dat1, 
+```
+
+library(tidyverse)
+hogs_georgia_county_cafo.dat <- read_csv('data/chickens_inventory_state.csv') 
+hogs_georgia_county_cafo.dat1 <- select(chickens_cafo.dat, Program, Year, Value, State, Commodity)
+
+read_csv('data/chickens_inventory_state.csv') %>%
+  select(Program, Year, Value, State, Commodity) %>%
+  mutate(Value = as.numeric(gsub(',', '', Value))) %>%
+  arrange(desc(Value))
+
+From these results, we can see that Georgia, Alabama, Arkansas, North Carolina, and Mississippi have the highest inventory for chickens in animal agriculture. 
+
+I intend to examine the particular counties within these top 5 states in each animal group that hold the highest concentrations of inventories, and from there, I hope to assess the race and class demographics of each county or possibly, zip code, through the data from the Census Bureau. Thank you!
+
